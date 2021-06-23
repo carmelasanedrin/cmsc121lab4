@@ -1,0 +1,169 @@
+{% extends 'library/main.html' %}
+
+{% block content %}
+    
+    <br><br>
+    <h1 style="font-family: 'Courier New', Courier, monospace; font-size: 70px; text-align: center; color:maroon; font-weight:750; text-shadow: 5px 5px 0px #dfcfb7;">WELCOME TO THE LIBRARY</h1>
+    <br><br>
+    <br><br>
+    <div class="container"> 
+        <a  href= "{% url 'addauthor'%}" class="btn btn-outline-dark" style="font-family:'Courier New', Courier, monospace; font-weight: 800;" >
+            <i class="fas fa-plus"></i>
+            Add Author
+        
+        </a>
+ 
+        <br><br>
+
+        <strong style="font-family: 'Courier New', Courier, monospace;">Total Number of Authors: </strong>{{authors|length}}
+        <br><br>
+
+        <table class="table table-striped table-hover" style="background-color: white; border-radius: 5px; font-family: 'Courier New', Courier, monospace; font-weight: 800;">
+            <thead>
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Country of Origin</th>
+                    <th colspan="2"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+            
+                {% for a in authors %}
+
+                <tr>
+
+                        <td>{{a.first_name}}</td>
+                        <td>{{a.last_name}}</td>
+                        <td>{{a.country}}</td>
+                        <td>
+                            <a href="{% url 'updateauthor' a.id %}" class="btn btn-outline-dark" style="font-weight: 800;">
+                                <i class= "fas fa-edit"></i>
+                                Update Data
+                            </a>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#delete_data_{{a.id}} " style="font-weight: 800;">
+                                <i class = "fas fa-trash"></i>
+                                Delete Author
+                            </button>
+
+                            <div class="modal fade" id="delete_data_{{a.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete Data Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="font-weight: 800;">
+                                            Are you sure you want to delete {{a.first_name}} {{a.last_name}}?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{%  url 'deleteauthor' a.id %}" class="btn btn-outline-success" style="font-weight: 800;">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="font-weight: 800;">
+                                                <i class="fas fa-ban"></i> Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>  
+
+    </div>
+    <br><br>
+    <div class="container">
+        <a  href= "{% url 'addbooks'%}" class="btn btn-outline-dark" style="font-family:'Courier New', Courier, monospace; font-weight: 800;">
+            <i class="fas fa-plus"></i>
+            Add Books
+        
+        </a>
+ 
+        <br><br>
+
+        <strong style="font-family: 'Courier New', Courier, monospace;">Total Number of Books: </strong>{{books|length}}
+        <br><br>
+
+        <table class="table table-striped table-hover" style="background-color: white; border-radius: 5px; font-family: 'Courier New', Courier, monospace; font-weight: 800;">
+            <thead>
+                <tr>
+                    <th scope="col">Book Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Language</th>
+                    <th scope="col">Pages</th>
+                    <th scope="col">Price</th>
+                    <th colspan="2"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+            
+                {% for x in books %}
+
+                <tr>
+
+                        <td>{{x.title}}</td>
+                        <td>{{x.author}}</td>
+                        <td>{{x.category}}</td>
+                        <td>{{x.language}}</td>
+                        <td>{{x.pages}}</td>
+                        <td>{{x.price}}</td>
+                        <td>
+                            <a href="{% url 'updatebooks' x.id %}" class="btn btn-outline-dark" style="font-weight: 800;">
+                                <i class= "fas fa-edit"></i>
+                                Update Data
+                            </a>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#delete_data_{{x.id}} " style="font-weight: 800;">
+                                <i class = "fas fa-trash"></i>
+                                Delete Book
+                            </button>
+
+                            <div class="modal fade" id="delete_data_{{x.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete Data Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete {{x.title}}?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{%  url 'deletebook' x.id %}" class="btn btn-outline-success">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                                                <i class="fas fa-ban"></i> Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+
+                </tr>
+
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+    
+
+{% endblock content %}
